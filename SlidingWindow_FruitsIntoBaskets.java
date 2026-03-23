@@ -1,4 +1,3 @@
-
 /*
 Problem: Fruits Into Baskets (Sliding Window)
 
@@ -40,7 +39,8 @@ class SlidingWindow_FruitsIntoBaskets {
         // TODO: Implement logic
         // 0,1,2,2
         int left = 0;
-        int sum = 0;
+        int max = 0;
+
         Map<Integer, Integer> myMap = new HashMap<>();
         
         for(int i = 0; i < fruits.length; i++ ){
@@ -52,7 +52,7 @@ class SlidingWindow_FruitsIntoBaskets {
                 myMap.put(curr, myMap.get(curr)+1);
             }
             
-            while(myMap.containsKey(curr) && myMap.size() > 2){
+            while(myMap.size() > 2){
                 int leftFruit = fruits[left];
                 myMap.put(leftFruit, myMap.get(leftFruit) - 1);
                 if(myMap.get(leftFruit) == 0) {
@@ -60,21 +60,18 @@ class SlidingWindow_FruitsIntoBaskets {
                 }
                 left++;   
             }
+            max = Math.max(max, i - left +1);
     
         }
-        
-        for(Integer val: myMap.values()){
-            sum = sum + val;
-        }
-        return sum;
+        return max;
     }
 
     public static void main(String[] args) {
         SlidingWindow_FruitsIntoBaskets obj = new SlidingWindow_FruitsIntoBaskets();
 
         // Test Case 1
-        System.out.println("Test 1: Expected = 3, Got = " +
-                obj.totalFruit(new int[]{1, 2, 1, 2, 3}));
+        System.out.println("Test 1: Expected = 5, Got = " +
+                obj.totalFruit(new int[]{3,3,3,1,2,1,1,2,3,3,4}));
 
         // Test Case 2
         System.out.println("Test 2: Expected = 3, Got = " +
